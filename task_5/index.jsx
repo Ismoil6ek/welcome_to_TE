@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-export const Block1 = ({ mouseEnterCallbak, imgSrc, imgAlt }) => {
+// Provider component with HOC is the best fit for this situation
+// Child components do not rerender, even if hover on (onMouseEnter event) them
+const BlockProvider = ({ mouseEnterCallbak, children }) => {
   const [isActive, setActive] = useState(false);
 
   const mouseEnterHandler = () => {
@@ -10,39 +12,33 @@ export const Block1 = ({ mouseEnterCallbak, imgSrc, imgAlt }) => {
 
   return (
     <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
-      <img src={imgSrc} alt={imgAlt} />
+      {children}
     </div>
+  );
+};
+
+export const Block1 = ({ mouseEnterCallbak, imgSrc, imgAlt }) => {
+  return (
+    <BlockProvider mouseEnterCallbak={mouseEnterCallbak}>
+      <img src={imgSrc} alt={imgAlt} />
+    </BlockProvider>
   );
 };
 
 export const Block2 = ({ mouseEnterCallbak, content }) => {
-  const [isActive, setActive] = useState(false);
-
-  const mouseEnterHandler = () => {
-    setActive(true);
-    mouseEnterCallbak();
-  };
-
   return (
-    <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
+    <BlockProvider mouseEnterCallbak={mouseEnterCallbak}>
       <p>{content}</p>
-    </div>
+    </BlockProvider>
   );
 };
 
 export const Block3 = ({ mouseEnterCallbak, userData }) => {
-  const [isActive, setActive] = useState(false);
-
-  const mouseEnterHandler = () => {
-    setActive(true);
-    mouseEnterCallbak();
-  };
-
   return (
-    <div onMouseEnter={mouseEnterHandler} className={isActive ? "active" : ""}>
+    <BlockProvider mouseEnterCallbak={mouseEnterCallbak}>
       <address>
         country: {userData.country}, street: {userData.street}
       </address>
-    </div>
+    </BlockProvider>
   );
 };
