@@ -1,7 +1,13 @@
-// ФАЙЛ ДЛЯ РЕДАКТИРОВАНИЯ И ТЕСТИРОВАНИЯ КОМПОНЕНТОВ ИЗ ТЕСТОВОГО ЗАДАНИЯ
-
 import { Component, memo } from "react";
-import { IUser, IProps } from "./interface";
+
+type IUser = {
+  name: string;
+  age: number;
+};
+
+type IProps = {
+  user: IUser;
+};
 
 function areEqual(prevUser: IProps, nextUser: IProps) {
   return (
